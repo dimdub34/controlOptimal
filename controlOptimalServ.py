@@ -91,6 +91,8 @@ class Serveur(object):
         self.le2mserv.gestionnaire_experience.run_func(self.all, "newperiod", 0)
         yield (self.le2mserv.gestionnaire_experience.run_step(
             trans_CO(u"Initial extraction"), self.all, "set_initial_extraction"))
+        self.le2mserv.gestionnaire_experience.run_func(
+            self.all, "update_data")
 
         # ----------------------------------------------------------------------
         # DEPENDS ON TREATMENT

@@ -163,7 +163,7 @@ class RemoteCO(IRemote, QObject):
         # player extraction
         # ----------------------------------------------------------------------
         self.extractions.add_x(xdata)
-        self.extractions.add_y(player_extraction["CO_extraction"])
+        self.extractions.add_y(player_extraction["extraction"])
         try:
             self.extractions.update_curve()
         except AttributeError:
@@ -173,11 +173,7 @@ class RemoteCO(IRemote, QObject):
         # resource
         # ----------------------------------------------------------------------
         self.resource.add_x(xdata)
-        self.resource.add_y(player_extraction["CO_resource"])
-        try:
-            self.resource.update_curve()
-        except AttributeError:
-            pass
+        self.resource.add_y(player_extraction["resource"])
 
         # ----------------------------------------------------------------------
         # player payoff
@@ -185,13 +181,18 @@ class RemoteCO(IRemote, QObject):
         self.payoffs.add_x(xdata)
         # compute the cumulative payoff
         if not self.payoffs.ydata:
-            self.payoffs.add_y(player_extraction["CO_payoff"])
+            self.payoffs.add_y(player_extraction["payoff"])
         else:
             self.payoffs.add_y(
-                self.payoffs.ydata[-1] + player_extraction["CO_payoff"])
+                self.payoffs.ydata[-1] + player_extraction["payoff"])
+
+        # ----------------------------------------------------------------------
+        # update curves
+        # ----------------------------------------------------------------------
         try:
             self.extractions.update_curve()
             self.payoffs.update_curve()
+            self.resource.update_curve()
         except AttributeError:  # if period==0
             pass
 

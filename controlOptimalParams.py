@@ -58,8 +58,8 @@ TIMER_UPDATE = timedelta(seconds=1)  # refresh the group data and the graphs
 # RESOURCE
 # ------------------------------------------------------------------------------
 
-RESOURCE_INITIAL_STOCK = 500
-RESOURCE_GROWTH = 25
+RESOURCE_INITIAL_STOCK = 10
+RESOURCE_GROWTH = 0.56
 
 # ------------------------------------------------------------------------------
 # FONCTION DE GAIN

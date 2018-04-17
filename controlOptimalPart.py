@@ -117,7 +117,7 @@ class PartieCO(Partie, pb.Referenceable):
         :return:
         """
         self.current_extraction = ExtractionsCO(
-            extraction, int((self.time_start - datetime.now()).total_seconds()))
+            extraction, int((datetime.now() - self.time_start).total_seconds()))
         self.joueur.info(self.current_extraction)
         self.le2mserv.gestionnaire_base.ajouter(self.current_extraction)
         self.currentperiod.extractions.append(self.current_extraction)
@@ -138,6 +138,8 @@ class PartieCO(Partie, pb.Referenceable):
         self.current_extraction.CO_resource = self.current_resource
         if self.current_resource < 0:
             self.current_resource = 0
+            # todo: think about how to keep track of the old value
+            self.current_extraction.CO_extraction = 0
 
         # ----------------------------------------------------------------------
         # compute individual payoffs
@@ -300,8 +302,9 @@ class ExtractionsCO(Base):
         return "extraction: {}".format(self.CO_extraction)
 
     def to_dict(self):
-        return {"extraction": self.CO_extraction,
-                "time": self.CO_extraction_time}
+        return {
+            "extraction": self.CO_extraction, "resource": self.CO_resource,
+            "payoff": self.CO_payoff, "time": self.CO_extraction_time}
 
 
 # ==============================================================================

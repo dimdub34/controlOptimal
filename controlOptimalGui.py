@@ -178,7 +178,7 @@ class PlotResource(QWidget):
                 "-k", marker=curve_marker)
 
         self.graph.set_ylim(0, pms.RESOURCE_INITIAL_STOCK * 2)
-        self.graph.set_yticks(range(0, pms.RESOURCE_INITIAL_STOCK * 2 + 1, 50))
+        self.graph.set_yticks(range(0, pms.RESOURCE_INITIAL_STOCK * 2 + 1, 2))
         self.graph.set_ylabel(trans_CO(u"Units"))
         self.graph.set_title(
             trans_CO(u"Available resource"))
@@ -222,8 +222,8 @@ class PlotPayoff(QWidget):
                 self.payoffs.xdata, self.payoffs.ydata,
                 "-k", marker=curve_marker)
 
-        self.graph.set_ylim(0, 50000)
-        self.graph.set_yticks(range(0, 51000, 5000))
+        self.graph.set_ylim(0, 100)
+        self.graph.set_yticks(range(0, 101, 20))
         self.graph.set_ylabel(trans_CO(u"ecus"))
         self.graph.set_title(trans_CO(u"Your part payoff"))
         self.graph.grid()
@@ -444,7 +444,7 @@ class GuiSummary(QDialog):
         # ----------------------------------------------------------------------
         self.remote.extractions.curve = None
         self.remote.resource.curve = None
-        self.remote.payoffs = None
+        self.remote.payoffs.curve = None
 
         self.plot_layout = QGridLayout()
         layout.addLayout(self.plot_layout)
