@@ -30,7 +30,8 @@ class RemoteCO(IRemote, QObject):
     def __init_vars(self):
         self.start_time = None
         self.extractions = PlotData()
-        self.payoffs = PlotData()
+        self.cumulative_payoffs = PlotData()  # sum of instant payoff
+        self.payoffs = PlotData()  # cumulative + infinite
         self.resource = PlotData()
         self.text_infos = u""
         self.decision_screen = None
@@ -178,13 +179,18 @@ class RemoteCO(IRemote, QObject):
         # ----------------------------------------------------------------------
         # player payoff
         # ----------------------------------------------------------------------
-        self.payoffs.add_x(xdata)
+        self.cumulative_payoffs.add_x(xdata)
         # compute the cumulative payoff
         if not self.payoffs.ydata:
-            self.payoffs.add_y(player_extraction["payoff"])
+            self.cumulative_payoffs.add_y(player_extraction["payoff"])
         else:
-            self.payoffs.add_y(
-                self.payoffs.ydata[-1] + player_extraction["payoff"])
+            self.cumulative_payoffs.add_y(
+                self.cumulative_payoffs.ydata[-1] + player_extraction["payoff"])
+        self.payoffs.add_x(xdata)
+        infinite_payoff = pms.get_infinite_payoff(
+            xdata, player_extraction["extraction"],
+            player_extraction["resource"])
+        self.payoffs.add_y(self.cumulative_payoffs.ydata[-1] + infinite_payoff)
 
         # ----------------------------------------------------------------------
         # update curves

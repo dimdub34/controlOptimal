@@ -12,6 +12,7 @@ from PyQt4.QtGui import QMessageBox
 from util import utiltools
 from util.utili18n import le2mtrans
 from util.utiltools import get_module_attributes, timedelta_to_time
+from server.servgui.servguidialogs import DSequence, GuiPayoffs
 
 # controlOptimal
 import controlOptimalParams as pms
@@ -171,3 +172,14 @@ class Serveur(object):
         yield (self.le2mserv.gestionnaire_experience.run_func(
             self.all, "end_update_data"))
 
+    def display_payoffs(self):
+        sequence_screen = DSequence(self.current_sequence)
+        if sequence_screen.exec_():
+            sequence = sequence_screen.sequence
+            players = self.le2mserv.gestionnaire_joueurs.get_players()
+            payoffs = sorted([(j.hostname, p.DYNCPR_gain_euros) for j in players
+                       for p in j.parties if p.nom == "controlOptimal" and
+                       p.CO_sequence == sequence])
+            logger.debug(payoffs)
+            screen_payoffs = GuiPayoffs(self.le2mserv, "controlOptimal", payoffs)
+            screen_payoffs.exec_()

@@ -31,7 +31,7 @@ class PartieCO(Partie, pb.Referenceable):
 
     CO_dynamic_type = Column(Integer)
     CO_trial = Column(Boolean)
-    CO_current_sequence = Column(Integer)
+    CO_sequence = Column(Integer)
     CO_treatment = Column(Integer)
     CO_group = Column(Integer, default=None)
     CO_gain_ecus = Column(Float)
@@ -42,7 +42,7 @@ class PartieCO(Partie, pb.Referenceable):
             nom="controlOptimal", nom_court="CO",
             joueur=joueur, le2mserv=le2mserv)
 
-        self.CO_current_sequence = kwargs.get("current_sequence", 0)
+        self.CO_sequence = kwargs.get("current_sequence", 0)
         self.CO_gain_ecus = 0
         self.CO_gain_euros = 0
 
@@ -134,12 +134,11 @@ class PartieCO(Partie, pb.Referenceable):
         # compute the resource
         # ----------------------------------------------------------------------
         self.current_resource += pms.RESOURCE_GROWTH
-        self.current_resource -= self.current_extraction.CO_extraction
-        self.current_extraction.CO_resource = self.current_resource
-        if self.current_resource < 0:
-            self.current_resource = 0
+        if self.current_extraction.CO_extraction > self.current_resource:
             # todo: think about how to keep track of the old value
             self.current_extraction.CO_extraction = 0
+        self.current_resource -= self.current_extraction.CO_extraction
+        self.current_extraction.CO_resource = self.current_resource
 
         # ----------------------------------------------------------------------
         # compute individual payoffs

@@ -73,7 +73,7 @@ param_r = 0.05
 param_tau = 0.1
 
 
-def get_infinite_payoff(dyn_type, p, E_p, G_p, R_p):
+def get_infinite_payoff(p, E_p, R_p):
     """
     Compute the payoff of the player if the group extraction stay at its
     current level at the infinite
@@ -84,14 +84,14 @@ def get_infinite_payoff(dyn_type, p, E_p, G_p, R_p):
     :param H_p: the current resource stock
     :return:
     """
-    if dyn_type == DISCRETE:
+    if DYNAMIC_TYPE == DISCRETE:
         pass  # todo: infinite payoff discrete dynamic_type
 
-    elif dyn_type == CONTINUOUS:
-        cste_p = RESOURCE_GROWTH - G_p
-        return (np.exp(-param_r*p) / param_r) * \
+    elif DYNAMIC_TYPE == CONTINUOUS:
+        cste_p = RESOURCE_GROWTH - E_p
+        return np.asscalar((np.exp(-param_r*p) / param_r) *
                (param_a*E_p - (param_b/2) * E_p**2 -
-                E_p*(param_c0 - param_c1 * R_p + param_c1 * cste_p * p)) + \
+                E_p*(param_c0 - param_c1 * R_p + param_c1 * cste_p * p)) +
                 E_p * param_c1 * cste_p * \
-               ((1+param_r*p) * np.exp(-param_r*p)/param_r**2)
+               ((1+param_r*p) * np.exp(-param_r*p)/param_r**2))
 
