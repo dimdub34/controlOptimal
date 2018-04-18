@@ -1,0 +1,102 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-18 17:18+0200\n"
+"PO-Revision-Date: 2018-04-18 17:22+0200\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Dimitri DUBOIS <dimitri.dubois@umontpellier.fr>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalServ.py:94
+msgid "Initial extraction"
+msgstr "Extraction initiale"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalServ.py:123
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:374
+msgid "Decision"
+msgstr "Décision"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:209
+msgid "Instant"
+msgstr "Instant"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:211
+msgid "Period"
+msgstr "Périodes"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:213
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:128
+msgid "Your extraction"
+msgstr "Votre extraction"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:215
+msgid "The available resource"
+msgstr "La ressource disponible"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:217
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:228
+msgid "Your part payoff"
+msgstr "Votre gain pour la partie"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:111
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:162
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:207
+msgid "Periods"
+msgstr "Périodes"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:121
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:172
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:217
+msgid "Time (seconds)"
+msgstr "Temps (secondes)"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:132
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:182
+msgid "Units"
+msgstr "Unités"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:133
+msgid "Extractions"
+msgstr "Extractions"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:184
+msgid "Available resource"
+msgstr "Ressource disponible"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:227
+msgid "ecus"
+msgstr "ecus"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:281
+msgid "Do you confirm your choice?"
+msgstr "Vous confirmez votre choix?"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalTexts.py:30
+msgid "Please choose an initial extraction value"
+msgstr "Merci de choisir une extraction initiale"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalTexts.py:32
+msgid "Please choose an extraction level"
+msgstr "Merci de choisir un niveau d'extraction"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalTexts.py:48
+msgid "Explanation text"
+msgstr "Texte explicatif"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalTexts.py:52
+msgid "Decision label"
+msgstr "Label de décision"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalTexts.py:56
+msgid "Summary text"
+msgstr "Texte récapitulatif"
