@@ -19,6 +19,7 @@ import random
 from datetime import timedelta
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
+import numpy as np
 
 # le2m
 from util.utili18n import le2mtrans
@@ -127,8 +128,8 @@ class PlotExtraction(QWidget):
                 self.extractions.xdata, self.extractions.ydata,
                 "-k", marker=curve_marker, label=trans_CO(u"Your extraction"))
 
-        self.graph.set_ylim(-5, 25)
-        self.graph.set_yticks(range(0, 2 * pms.DECISION_MAX + 1, 5))
+        self.graph.set_ylim(-1, pms.DECISION_MAX+1)
+        self.graph.set_yticks(np.arange(0, pms.DECISION_MAX + 1, 0.5))
         self.graph.set_ylabel(trans_CO(u"Units"))
         self.graph.set_title(trans_CO(u"Extractions"))
         self.graph.grid()
