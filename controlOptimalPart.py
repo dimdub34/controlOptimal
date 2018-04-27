@@ -134,9 +134,13 @@ class PartieCO(Partie, pb.Referenceable):
         # compute the resource
         # ----------------------------------------------------------------------
         self.current_resource += pms.RESOURCE_GROWTH
+        # if the extraction > current_resource we create a new extraction of 0
         if self.current_extraction.CO_extraction > self.current_resource:
-            # todo: think about how to keep track of the old value
-            self.current_extraction.CO_extraction = 0
+            # create a new extraction
+            self.current_extraction = ExtractionsCO(0, the_time)
+            self.joueur.info(self.current_extraction)
+            self.le2mserv.gestionnaire_base.ajouter(self.current_extraction)
+            self.currentperiod.extractions.append(self.current_extraction)
         self.current_resource -= self.current_extraction.CO_extraction
         self.current_extraction.CO_resource = self.current_resource
 
@@ -145,10 +149,15 @@ class PartieCO(Partie, pb.Referenceable):
         # ----------------------------------------------------------------------
         try:
             j_extrac = self.current_extraction.CO_extraction
-            payoff = pms.param_a * j_extrac - (pms.param_b / 2) * \
-                       pow(j_extrac, 2) - \
-                       (pms.param_c0 - pms.param_c1 * self.current_resource) * j_extrac
-            self.current_extraction.CO_payoff = payoff
+            self.current_extraction.CO_benefice = \
+                pms.param_a * j_extrac - (pms.param_b / 2) * pow(j_extrac, 2)
+            self.current_extraction.CO_cost = \
+                j_extrac * (pms.param_c0 - pms.param_c1 * self.current_resource)
+            # we do not allow a negative cost
+            if self.current_extraction.CO_cost < 0:
+                self.current_extraction.CO_cost = 0
+            self.current_extraction.CO_payoff = \
+                self.current_extraction.CO_benefice - self.current_extraction.CO_cost
         except KeyError:
             pass  # only for the initial extraction
 
@@ -162,26 +171,26 @@ class PartieCO(Partie, pb.Referenceable):
     def end_update_data(self):
         yield (self.remote.callRemote("end_update_data"))
 
-    def compute_periodpayoff(self):
-        logger.debug(u"{} Period Payoff".format(self.joueur))
-        self.currentperiod.CO_periodpayoff = 0
-
-        # cumulative payoff since the first period
-        if self.currentperiod.CO_period < 2:
-            self.currentperiod.CO_cumulativepayoff = \
-                self.currentperiod.CO_periodpayoff
-        else:
-            previousperiod = self.periods[self.currentperiod.CO_period - 1]
-            self.currentperiod.CO_cumulativepayoff = \
-                previousperiod.CO_cumulativepayoff + \
-                self.currentperiod.CO_periodpayoff
-
-        # we store the period in the self.periodes dictionnary
-        self.periods[self.currentperiod.CO_period] = self.currentperiod
-
-        logger.debug(u"{} Period Payoff {}".format(
-            self.joueur,
-            self.currentperiod.CO_periodpayoff))
+    # def compute_periodpayoff(self):
+    #     logger.debug(u"{} Period Payoff".format(self.joueur))
+    #     self.currentperiod.CO_periodpayoff = 0
+    #
+    #     # cumulative payoff since the first period
+    #     if self.currentperiod.CO_period < 2:
+    #         self.currentperiod.CO_cumulativepayoff = \
+    #             self.currentperiod.CO_periodpayoff
+    #     else:
+    #         previousperiod = self.periods[self.currentperiod.CO_period - 1]
+    #         self.currentperiod.CO_cumulativepayoff = \
+    #             previousperiod.CO_cumulativepayoff + \
+    #             self.currentperiod.CO_periodpayoff
+    #
+    #     # we store the period in the self.periodes dictionnary
+    #     self.periods[self.currentperiod.CO_period] = self.currentperiod
+    #
+    #     logger.debug(u"{} Period Payoff {}".format(
+    #         self.joueur,
+    #         self.currentperiod.CO_periodpayoff))
 
     @defer.inlineCallbacks
     def display_summary(self, *args):
@@ -208,9 +217,16 @@ class PartieCO(Partie, pb.Referenceable):
             curve_data = CurveCO(pms.PAYOFF, x, y)
             self.le2mserv.gestionnaire_base.ajouter(curve_data)
             self.curves.append(curve_data)
+        # we collect the part payoff
+        self.CO_gain_ecus = payoff_indiv[-1][1]
         resource = data_indiv["resource"]
         for x, y in resource:
             curve_data = CurveCO(pms.RESOURCE, x, y)
+            self.le2mserv.gestionnaire_base.ajouter(curve_data)
+            self.curves.append(curve_data)
+        cost = data_indiv["cost"]
+        for x, y in cost:
+            curve_data = CurveCO(pms.COST, x, y)
             self.le2mserv.gestionnaire_base.ajouter(curve_data)
             self.curves.append(curve_data)
         self.joueur.info("Ok")
@@ -229,15 +245,12 @@ class PartieCO(Partie, pb.Referenceable):
         if pms.PARTIE_ESSAI:
             self.CO_gain_ecus = 0
             self.CO_gain_euros = 0
-
         else:
-            self.currentperiod.CO_cumulativepayoff = \
-                self.curves[-1].CO_curve_y
-            self.CO_gain_ecus = self.currentperiod.CO_cumulativepayoff
             self.CO_gain_euros = float(self.CO_gain_ecus) * \
                                      float(pms.TAUX_CONVERSION)
-            yield (self.remote.callRemote(
-                "set_payoffs", self.CO_gain_euros, self.CO_gain_ecus))
+
+        yield (self.remote.callRemote(
+            "set_payoffs", self.CO_gain_euros, self.CO_gain_ecus))
 
         logger.info(u'{} Payoff ecus {} Payoff euros {:.2f}'.format(
             self.joueur, self.CO_gain_ecus, self.CO_gain_euros))
@@ -291,6 +304,8 @@ class ExtractionsCO(Base):
     CO_extraction = Column(Float)
     CO_extraction_time = Column(Float)
     CO_resource = Column(Float)
+    CO_benefice = Column(Float)
+    CO_cost = Column(Float)
     CO_payoff = Column(Float)
 
     def __init__(self, extraction, the_time):
@@ -301,9 +316,7 @@ class ExtractionsCO(Base):
         return "extraction: {}".format(self.CO_extraction)
 
     def to_dict(self):
-        return {
-            "extraction": self.CO_extraction, "resource": self.CO_resource,
-            "payoff": self.CO_payoff, "time": self.CO_extraction_time}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 # ==============================================================================

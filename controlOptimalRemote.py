@@ -30,6 +30,9 @@ class RemoteCO(IRemote, QObject):
     def __init_vars(self):
         self.start_time = None
         self.extractions = PlotData()
+        self.cost = PlotData()
+        self.payoff_instant = PlotData()
+        self.payoff_part = PlotData()
         self.cumulative_payoffs = PlotData()  # sum of instant payoff
         self.payoffs = PlotData()  # cumulative + infinite
         self.resource = PlotData()
@@ -164,7 +167,7 @@ class RemoteCO(IRemote, QObject):
         # player extraction
         # ----------------------------------------------------------------------
         self.extractions.add_x(xdata)
-        self.extractions.add_y(player_extraction["extraction"])
+        self.extractions.add_y(player_extraction["CO_extraction"])
         try:
             self.extractions.update_curve()
         except AttributeError:
@@ -174,31 +177,33 @@ class RemoteCO(IRemote, QObject):
         # resource
         # ----------------------------------------------------------------------
         self.resource.add_x(xdata)
-        self.resource.add_y(player_extraction["resource"])
+        self.resource.add_y(player_extraction["CO_resource"])
+
+        # ----------------------------------------------------------------------
+        # cost
+        # ----------------------------------------------------------------------
+        self.cost.add_x(xdata)
+        self.cost.add_y(player_extraction["CO_cost"])
 
         # ----------------------------------------------------------------------
         # player payoff
         # ----------------------------------------------------------------------
-        self.cumulative_payoffs.add_x(xdata)
-        # compute the cumulative payoff
-        if not self.payoffs.ydata:
-            self.cumulative_payoffs.add_y(player_extraction["payoff"])
-        else:
-            self.cumulative_payoffs.add_y(
-                self.cumulative_payoffs.ydata[-1] + player_extraction["payoff"])
-        self.payoffs.add_x(xdata)
+        self.payoff_instant.add_x(xdata)
+        self.payoff_instant.add_y(player_extraction["CO_payoff"])
+        cumulative_payoff = sum(self.payoff_instant.ydata)
         infinite_payoff = pms.get_infinite_payoff(
-            xdata, player_extraction["extraction"],
-            player_extraction["resource"])
-        self.payoffs.add_y(self.cumulative_payoffs.ydata[-1] + infinite_payoff)
+            xdata, player_extraction["CO_extraction"],
+            player_extraction["CO_resource"])
+        self.payoff_part.add_x(xdata)
+        self.payoff_part.add_y(cumulative_payoff + infinite_payoff)
 
         # ----------------------------------------------------------------------
         # update curves
         # ----------------------------------------------------------------------
         try:
             self.extractions.update_curve()
-            self.payoffs.update_curve()
             self.resource.update_curve()
+            self.payoff_part.update_curve()
         except AttributeError:  # if period==0
             pass
 
@@ -210,12 +215,14 @@ class RemoteCO(IRemote, QObject):
             pms.DYNAMIC_TYPE == pms.CONTINUOUS else \
             texts_CO.trans_CO(u"Period")
         self.text_infos = the_time_str + u": {}".format(int(xdata)) + \
-            u"<br>" + texts_CO.trans_CO(u"Your extraction") + \
+            u"<br>" + texts_CO.trans_CO(u"Extraction") + \
             u": {:.2f}".format(self.extractions.ydata[-1]) + \
-            u"<br>" + texts_CO.trans_CO(u"The available resource") + \
+            u"<br>" + texts_CO.trans_CO(u"Available resource") + \
             u": {:.2f}".format(self.resource.ydata[-1]) + \
-            u"<br>" + texts_CO.trans_CO(u"Your part payoff") + \
-            u": {:.2f}".format(self.payoffs.ydata[-1])
+            u"<br>" + texts_CO.trans_CO(u"Instant payoff") + \
+            u": {:.2f}".format(self.payoff_instant.ydata[-1]) + \
+            u"<br>" + texts_CO.trans_CO(u"Part payoff") + \
+            u": {:.2f}".format(self.payoff_part.ydata[-1])
         self.text_infos += u"<br>{}<br>{}".format(20*"-", old)
 
         # ----------------------------------------------------------------------
@@ -225,7 +232,7 @@ class RemoteCO(IRemote, QObject):
                     "resource: {:.2f} payoff: {:.2f}".format(
             self.le2mclt, self.extractions.ydata[-1],
             self.resource.ydata[-1],
-            self.payoffs.ydata[-1]))
+            self.payoff_part.ydata[-1]))
 
     def remote_end_update_data(self):
         logger.debug("{}: call of remote_end_data".format(self.le2mclt))
@@ -248,7 +255,8 @@ class RemoteCO(IRemote, QObject):
             logger.info("{} send curves".format(self.le2mclt))
             return {
                 "extractions": zip(self.extractions.xdata, self.extractions.ydata),
-                "payoffs": zip(self.payoffs.xdata, self.payoffs.ydata),
+                "payoffs": zip(self.payoff_part.xdata, self.payoff_part.ydata),
+                "costs": zip(self.cost.xdata, self.cost.ydata),
                 "resource": zip(self.resource.xdata, self.resource.ydata)
             }
         else:

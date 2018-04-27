@@ -71,7 +71,7 @@ class MySlider(QWidget):
         self.slider = QSlider(Qt.Horizontal)
         self.slider.setMinimum(pms.DECISION_MIN)
         self.slider.setMaximum(pms.DECISION_MAX * int(1 / pms.DECISION_STEP))
-        self.slider.setTickInterval(100)
+        self.slider.setTickInterval(10)
         self.slider.setTickPosition(QSlider.TicksAbove)
         self.slider.valueChanged.connect(self.display)
         self.grid_layout.addWidget(self.slider, 2, 0, 1, 3)
@@ -92,7 +92,7 @@ class PlotExtraction(QWidget):
     This widget plot the individual extractions
     """
 
-    def __init__(self, cltuid, extractions):
+    def __init__(self, extractions):
         QWidget.__init__(self)
 
         self.extractions = extractions
@@ -126,14 +126,13 @@ class PlotExtraction(QWidget):
         if self.extractions.curve is None:
             self.extractions.curve, = self.graph.plot(
                 self.extractions.xdata, self.extractions.ydata,
-                "-k", marker=curve_marker, label=trans_CO(u"Your extraction"))
+                "-k", marker=curve_marker)
 
-        self.graph.set_ylim(-1, pms.DECISION_MAX+1)
-        self.graph.set_yticks(np.arange(0, pms.DECISION_MAX + 1, 0.5))
-        self.graph.set_ylabel(trans_CO(u"Units"))
-        self.graph.set_title(trans_CO(u"Extractions"))
+        self.graph.set_ylim(-0.1, pms.DECISION_MAX+0.1)
+        self.graph.set_yticks(np.arange(0, pms.DECISION_MAX + 0.1, 0.2))
+        self.graph.set_ylabel("")
+        self.graph.set_title(trans_CO(u"Extraction"))
         self.graph.grid()
-        self.graph.legend(loc="lower left", fontsize=10)
         self.canvas.draw()
 
 
@@ -178,9 +177,9 @@ class PlotResource(QWidget):
                 self.resource.xdata, self.resource.ydata,
                 "-k", marker=curve_marker)
 
-        self.graph.set_ylim(0, pms.RESOURCE_INITIAL_STOCK * 2)
-        self.graph.set_yticks(range(0, pms.RESOURCE_INITIAL_STOCK * 2 + 1, 2))
-        self.graph.set_ylabel(trans_CO(u"Units"))
+        self.graph.set_ylim(0, pms.RESOURCE_INITIAL_STOCK * 3)
+        self.graph.set_yticks(range(0, pms.RESOURCE_INITIAL_STOCK * 3 + 1, 2))
+        self.graph.set_ylabel("")
         self.graph.set_title(
             trans_CO(u"Available resource"))
         self.graph.grid()
@@ -223,10 +222,10 @@ class PlotPayoff(QWidget):
                 self.payoffs.xdata, self.payoffs.ydata,
                 "-k", marker=curve_marker)
 
-        self.graph.set_ylim(0, 100)
-        self.graph.set_yticks(range(0, 101, 20))
-        self.graph.set_ylabel(trans_CO(u"ecus"))
-        self.graph.set_title(trans_CO(u"Your part payoff"))
+        self.graph.set_ylim(0, 600)
+        self.graph.set_yticks(range(0, 601, 50))
+        self.graph.set_ylabel("")
+        self.graph.set_title(trans_CO(u"Part payoff"))
         self.graph.grid()
         self.canvas.draw()
 
@@ -336,15 +335,14 @@ class GuiDecision(QDialog):
 
         self.plot_layout = QGridLayout()
         layout.addLayout(self.plot_layout)
-        # extractions (indiv + group)
-        self.plot_extraction = PlotExtraction(
-            self.remote.le2mclt.uid, self.remote.extractions)
+        # extraction
+        self.plot_extraction = PlotExtraction(self.remote.extractions)
         self.plot_layout.addWidget(self.plot_extraction, 0, 0)
-        # payoff indiv
+        # part payoff
         self.plot_payoff = PlotPayoff(
-            self.remote.payoffs)
+            self.remote.payoff_part)
         self.plot_layout.addWidget(self.plot_payoff, 0, 1)
-        # resource
+        # available resource
         self.plot_resource = PlotResource(self.remote.resource)
         self.plot_layout.addWidget(self.plot_resource, 1, 0)
         # value in text mode
@@ -445,17 +443,16 @@ class GuiSummary(QDialog):
         # ----------------------------------------------------------------------
         self.remote.extractions.curve = None
         self.remote.resource.curve = None
-        self.remote.payoffs.curve = None
+        self.remote.payoff_part.curve = None
 
         self.plot_layout = QGridLayout()
         layout.addLayout(self.plot_layout)
         # extractions (indiv + group)
-        self.plot_extraction = PlotExtraction(
-            self.remote.le2mclt.uid, self.remote.extractions)
+        self.plot_extraction = PlotExtraction(self.remote.extractions)
         self.plot_layout.addWidget(self.plot_extraction, 0, 0)
         # payoff indiv
         self.plot_payoff = PlotPayoff(
-            self.remote.payoffs)
+            self.remote.payoff_part)
         self.plot_layout.addWidget(self.plot_payoff, 0, 1)
         # resource
         self.plot_resource = PlotResource(self.remote.resource)
@@ -498,7 +495,8 @@ class GuiSummary(QDialog):
         # ----------------------------------------------------------------------
         data_indiv = {
             "extractions": zip(self.remote.extractions.xdata, self.remote.extractions.ydata),
-            "payoffs": zip(self.remote.payoffs.xdata, self.remote.payoffs.ydata),
+            "payoffs": zip(self.remote.payoff_part.xdata, self.remote.payoff_part.ydata),
+            "cost": zip(self.remote.cost.xdata, self.remote.cost.ydata),
             "resource": zip(self.remote.resource.xdata, self.remote.resource.ydata)
         }
         logger.debug("{} send curves".format(self.remote.le2mclt))

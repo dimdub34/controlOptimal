@@ -40,8 +40,7 @@ class Serveur(object):
                 utiltools.get_module_info(pms), le2mtrans(u"Parameters"))
         actions[le2mtrans(u"Start")] = lambda _: self.demarrer()
         actions[le2mtrans(u"Display payoffs")] = \
-            lambda _: self.le2mserv.gestionnaire_experience.\
-            display_payoffs_onserver("controlOptimal")
+            lambda _: self.display_payoffs()
         self.le2mserv.gestionnaire_graphique.add_topartmenu(
             u"Contrôle Optimal", actions)
 
