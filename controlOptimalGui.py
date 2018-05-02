@@ -25,10 +25,7 @@ from twisted.internet.defer import AlreadyCalledError
 # le2m
 from util.utili18n import le2mtrans
 from util.utiltools import timedelta_to_time
-from client.cltgui.cltguidialogs import GuiHistorique
-from client.cltgui.cltguitablemodels import TableModelHistorique
-from client.cltgui.cltguiwidgets import (WPeriod, WExplication, WCompterebours,
-                                         WTableview)
+from client.cltgui.cltguiwidgets import (WExplication, WCompterebours)
 
 # controlOptimal
 import controlOptimalParams as pms
