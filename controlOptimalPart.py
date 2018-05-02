@@ -248,12 +248,8 @@ class PartieCO(Partie, pb.Referenceable):
         """
         logger.debug(u"{} Part Payoff".format(self.joueur))
 
-        if pms.PARTIE_ESSAI:
-            self.CO_gain_ecus = 0
-            self.CO_gain_euros = 0
-        else:
-            self.CO_gain_euros = float(self.CO_gain_ecus) * \
-                                     float(pms.TAUX_CONVERSION)
+        self.CO_gain_euros = float(self.CO_gain_ecus) * \
+                             float(pms.TAUX_CONVERSION)
 
         yield (self.remote.callRemote(
             "set_payoffs", self.CO_gain_euros, self.CO_gain_ecus))
