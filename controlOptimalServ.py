@@ -47,7 +47,7 @@ class Serveur(object):
     def configure(self):
         screen_conf = DConfigure(self.le2mserv.gestionnaire_graphique.screen)
         if screen_conf.exec_():
-            pms_list = []
+            pms_list = [None, "Control Optimal parameters"]
             for k, v in get_module_attributes(pms).items():
                 if k in ["DYNAMIC_TYPE", "NOMBRE_PERIODES", "PARTIE_ESSAI"]:
                     pms_list.append("{}: {}".format(k, v))
