@@ -178,8 +178,7 @@ class PlotResource(QWidget):
         self.graph.set_ylim(0, pms.RESOURCE_INITIAL_STOCK * 3)
         self.graph.set_yticks(range(0, pms.RESOURCE_INITIAL_STOCK * 3 + 1, 2))
         self.graph.set_ylabel("")
-        self.graph.set_title(
-            trans_CO(u"Available resource"))
+        self.graph.set_title(trans_CO(u"Available resource"))
         self.graph.grid()
         self.canvas.draw()
 
