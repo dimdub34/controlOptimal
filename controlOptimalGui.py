@@ -20,6 +20,7 @@ from datetime import timedelta
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 import numpy as np
+from twisted.internet.defer import AlreadyCalledError
 
 # le2m
 from util.utili18n import le2mtrans
@@ -425,7 +426,10 @@ class GuiDecision(QDialog):
         except AttributeError:  # if dynamic == discrete
             pass
         if pms.DYNAMIC_TYPE == pms.CONTINUOUS:
-            self.defered.callback(None)
+            try:
+                self.defered.callback(None)
+            except AlreadyCalledError:
+                pass
         super(GuiDecision, self).accept()
 
 
