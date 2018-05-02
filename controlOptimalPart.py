@@ -147,19 +147,16 @@ class PartieCO(Partie, pb.Referenceable):
         # ----------------------------------------------------------------------
         # compute individual payoffs
         # ----------------------------------------------------------------------
-        try:
-            j_extrac = self.current_extraction.CO_extraction
-            self.current_extraction.CO_benefice = \
-                pms.param_a * j_extrac - (pms.param_b / 2) * pow(j_extrac, 2)
-            self.current_extraction.CO_cost = \
-                j_extrac * (pms.param_c0 - pms.param_c1 * self.current_resource)
-            # we do not allow a negative cost
-            if self.current_extraction.CO_cost < 0:
-                self.current_extraction.CO_cost = 0
-            self.current_extraction.CO_payoff = \
-                self.current_extraction.CO_benefice - self.current_extraction.CO_cost
-        except KeyError:
-            pass  # only for the initial extraction
+        j_extrac = self.current_extraction.CO_extraction
+        self.current_extraction.CO_benefice = \
+            pms.param_a * j_extrac - (pms.param_b / 2) * pow(j_extrac, 2)
+        self.current_extraction.CO_cost = \
+            j_extrac * (pms.param_c0 - pms.param_c1 * self.current_resource)
+        # we do not allow a negative cost
+        if self.current_extraction.CO_cost < 0:
+            self.current_extraction.CO_cost = 0
+        self.current_extraction.CO_payoff = \
+            self.current_extraction.CO_benefice - self.current_extraction.CO_cost
 
         # ----------------------------------------------------------------------
         # update the remote
@@ -170,27 +167,6 @@ class PartieCO(Partie, pb.Referenceable):
     @defer.inlineCallbacks
     def end_update_data(self):
         yield (self.remote.callRemote("end_update_data"))
-
-    # def compute_periodpayoff(self):
-    #     logger.debug(u"{} Period Payoff".format(self.joueur))
-    #     self.currentperiod.CO_periodpayoff = 0
-    #
-    #     # cumulative payoff since the first period
-    #     if self.currentperiod.CO_period < 2:
-    #         self.currentperiod.CO_cumulativepayoff = \
-    #             self.currentperiod.CO_periodpayoff
-    #     else:
-    #         previousperiod = self.periods[self.currentperiod.CO_period - 1]
-    #         self.currentperiod.CO_cumulativepayoff = \
-    #             previousperiod.CO_cumulativepayoff + \
-    #             self.currentperiod.CO_periodpayoff
-    #
-    #     # we store the period in the self.periodes dictionnary
-    #     self.periods[self.currentperiod.CO_period] = self.currentperiod
-    #
-    #     logger.debug(u"{} Period Payoff {}".format(
-    #         self.joueur,
-    #         self.currentperiod.CO_periodpayoff))
 
     @defer.inlineCallbacks
     def display_summary(self, *args):
