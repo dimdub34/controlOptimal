@@ -33,8 +33,6 @@ class RemoteCO(IRemote, QObject):
         self.cost = PlotData()
         self.payoff_instant = PlotData()
         self.payoff_part = PlotData()
-        self.cumulative_payoffs = PlotData()  # sum of instant payoff
-        self.payoffs = PlotData()  # cumulative + infinite
         self.resource = PlotData()
         self.text_infos = u""
         self.decision_screen = None
@@ -261,8 +259,9 @@ class RemoteCO(IRemote, QObject):
             }
         else:
             defered = defer.Deferred()
+            part_payoff = float(self.payoff_part.ydata[-1]) * pms.TAUX_CONVERSION
             summary_screen = GuiSummary(
-                self, defered, texts_CO.get_text_summary(period_content))
+                self, defered, texts_CO.get_text_summary(part_payoff))
             summary_screen.showMaximized()
             return defered
 

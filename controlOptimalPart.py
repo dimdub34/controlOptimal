@@ -201,17 +201,20 @@ class PartieCO(Partie, pb.Referenceable):
         :return:
         """
         logger.debug(u"{} Summary".format(self.joueur))
+
         # ----------------------------------------------------------------------
         # we collect the x_data and y_data of the curves displayed on the
         # remote
         # ----------------------------------------------------------------------
         data_indiv = yield(self.remote.callRemote(
             "display_summary", self.currentperiod.to_dict()))
+
         extrac_indiv = data_indiv["extractions"]
         for x, y in extrac_indiv:
             curve_data = CurveCO(pms.EXTRACTION, x, y)
             self.le2mserv.gestionnaire_base.ajouter(curve_data)
             self.curves.append(curve_data)
+
         payoff_indiv = data_indiv["payoffs"]
         for x, y in payoff_indiv:
             curve_data = CurveCO(pms.PAYOFF, x, y)
@@ -219,16 +222,19 @@ class PartieCO(Partie, pb.Referenceable):
             self.curves.append(curve_data)
         # we collect the part payoff
         self.CO_gain_ecus = payoff_indiv[-1][1]
+
         resource = data_indiv["resource"]
         for x, y in resource:
             curve_data = CurveCO(pms.RESOURCE, x, y)
             self.le2mserv.gestionnaire_base.ajouter(curve_data)
             self.curves.append(curve_data)
+
         cost = data_indiv["cost"]
         for x, y in cost:
             curve_data = CurveCO(pms.COST, x, y)
             self.le2mserv.gestionnaire_base.ajouter(curve_data)
             self.curves.append(curve_data)
+
         self.joueur.info("Ok")
         self.joueur.remove_waitmode()
 
@@ -252,7 +258,7 @@ class PartieCO(Partie, pb.Referenceable):
         yield (self.remote.callRemote(
             "set_payoffs", self.CO_gain_euros, self.CO_gain_ecus))
 
-        logger.info(u'{} Payoff ecus {} Payoff euros {:.2f}'.format(
+        logger.info(u'{} Payoff ecus {:.2f} Payoff euros {:.2f}'.format(
             self.joueur, self.CO_gain_ecus, self.CO_gain_euros))
 
 

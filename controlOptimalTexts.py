@@ -27,10 +27,9 @@ except (AttributeError, IOError):
 # ==============================================================================
 
 INITIAL_EXTRACTION = trans_CO(
-    u"Please choose an initial extraction value")
+    u"Please choose an initial extraction level")
 
 EXTRACTION = trans_CO(u"Please choose an extraction level")
-
 
 
 def get_histo_vars():
@@ -52,8 +51,9 @@ def get_text_label_decision():
     return trans_CO(u"Decision label")
 
 
-def get_text_summary(period_content):
-    txt = trans_CO(u"Summary text")
+def get_text_summary(part_payoff):
+    txt = trans_CO(u"Your payoff for the part is ") + \
+          u"{:.2f} euros".format(part_payoff)
     return txt
 
 

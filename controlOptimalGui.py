@@ -447,21 +447,26 @@ class GuiSummary(QDialog):
 
         self.plot_layout = QGridLayout()
         layout.addLayout(self.plot_layout)
+
         # extractions (indiv + group)
         self.plot_extraction = PlotExtraction(self.remote.extractions)
         self.plot_layout.addWidget(self.plot_extraction, 0, 0)
+
         # payoff indiv
         self.plot_payoff = PlotPayoff(
             self.remote.payoff_part)
         self.plot_layout.addWidget(self.plot_payoff, 0, 1)
+
         # resource
         self.plot_resource = PlotResource(self.remote.resource)
         self.plot_layout.addWidget(self.plot_resource, 1, 0)
+
         # value in text mode
         widget_infos = QWidget()
         widget_infos.setLayout(QVBoxLayout())
         self.textEdit_infos = QTextEdit()
         self.textEdit_infos.setReadOnly(True)
+        self.textEdit_infos.setText(the_text)
         widget_infos.layout().addWidget(self.textEdit_infos)
         self.plot_layout.addWidget(widget_infos, 1, 1)
         self.plot_layout.setColumnStretch(0, 1)

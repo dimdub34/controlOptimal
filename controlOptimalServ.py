@@ -176,7 +176,7 @@ class Serveur(object):
         if sequence_screen.exec_():
             sequence = sequence_screen.sequence
             players = self.le2mserv.gestionnaire_joueurs.get_players()
-            payoffs = sorted([(j.hostname, p.DYNCPR_gain_euros) for j in players
+            payoffs = sorted([(j.hostname, p.CO_gain_euros) for j in players
                        for p in j.parties if p.nom == "controlOptimal" and
                        p.CO_sequence == sequence])
             logger.debug(payoffs)
