@@ -428,8 +428,8 @@ class GuiDecision(QDialog):
         if pms.DYNAMIC_TYPE == pms.CONTINUOUS:
             try:
                 self.defered.callback(None)
-            except AlreadyCalledError:
-                pass
+            except AlreadyCalledError as m:
+                logger.warning(m.message)
         super(GuiDecision, self).accept()
 
 
