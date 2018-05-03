@@ -54,6 +54,9 @@ class Serveur(object):
             continuous_time_duration = timedelta_to_time(pms.CONTINUOUS_TIME_DURATION)
             pms_list.append("CONTINUOUS_TIME_DURATION: {}".format(
                 continuous_time_duration.strftime("%H:%M:%S")))
+            discrete_time_duration = timedelta_to_time(pms.DISCRETE_DECISION_TIME)
+            pms_list.append("DISCRETE_DECISION_TIME: {}".format(
+                discrete_time_duration.strftime("%H:%M:%S")))
             self.le2mserv.gestionnaire_graphique.infoserv(pms_list)
 
     @defer.inlineCallbacks

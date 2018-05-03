@@ -188,6 +188,7 @@ class RemoteCO(IRemote, QObject):
         # ----------------------------------------------------------------------
         self.payoff_instant.add_x(xdata)
         self.payoff_instant.add_y(player_extraction["CO_payoff"])
+        # todo: compute integral rather than the sum
         cumulative_payoff = sum(self.payoff_instant.ydata)
         infinite_payoff = pms.get_infinite_payoff(
             xdata, player_extraction["CO_extraction"],

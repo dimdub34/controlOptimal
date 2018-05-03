@@ -78,21 +78,51 @@ def get_infinite_payoff(p, E_p, R_p):
     """
     Compute the payoff of the player if the group extraction stay at its
     current level at the infinite
-    :param dyn_type: DISCRETE or CONTINUOUS
     :param p: the current period
     :param E_p: the current extraction value of the player
-    :param G_p: the current extraction value of the group
-    :param H_p: the current resource stock
+    :param R_p: the current resource stock
     :return:
     """
     if DYNAMIC_TYPE == DISCRETE:
-        pass  # todo: infinite payoff discrete dynamic_type
+        cste_dis = (1/param_tau) * (RESOURCE_GROWTH - E_p)
+        return (
+            param_tau *
+            (
+                    param_a * E_p - (param_b/2) * pow(E_p, 2) -
+                    E_p * (param_c0 - param_c1 * R_p)
+            )
+            *
+            (
+                    pow(1-param_r*param_tau, p+1) / (param_r * param_tau)
+            )
+            +
+        param_tau * E_p * param_c1 * cste_dis
+            *
+            (
+                    (
+                            pow(1 - param_r*param_tau, p+1) *
+                            (p * param_r*param_tau + 1)
+                    )
+                    /
+                    pow(param_r * param_tau, 2)
+            )
+        )
 
     elif DYNAMIC_TYPE == CONTINUOUS:
         cste_p = RESOURCE_GROWTH - E_p
-        return np.asscalar((np.exp(-param_r*p) / param_r) *
-               (param_a*E_p - (param_b/2) * E_p**2 -
-                E_p*(param_c0 - param_c1 * R_p + param_c1 * cste_p * p)) +
-                E_p * param_c1 * cste_p * \
-               ((1+param_r*p) * np.exp(-param_r*p)/param_r**2))
+        return np.asscalar(
+            (
+                    np.exp(-param_r*p) / param_r
+            )
+            *
+            (
+                    param_a*E_p - (param_b/2) * E_p**2 -
+                    E_p*(param_c0 - param_c1 * R_p + param_c1 * cste_p * p)
+            )
+            +
+            E_p * param_c1 * cste_p *
+            (
+                    (1+param_r*p) * np.exp(-param_r*p)/param_r**2
+            )
+        )
 
