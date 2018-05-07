@@ -76,8 +76,6 @@ class MySlider(QWidget):
 
         self.layout.addStretch()
 
-        self.adjustSize()
-
     def display(self, value):
         self.lcd.display(value / int(1 / pms.DECISION_STEP))
 
