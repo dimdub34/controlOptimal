@@ -74,6 +74,14 @@ param_r = 0.05
 param_tau = 0.1
 
 
+def get_cumulative_payoff(p, extractions):
+    if DYNAMIC_TYPE == DISCRETE:
+        return sum([pow(1 - param_r * param_tau, p) * i for i in extractions])
+
+    elif DYNAMIC_TYPE == CONTINUOUS:
+        return sum([i * np.exp(- param_r * p) for i in extractions])
+
+
 def get_infinite_payoff(p, E_p, R_p):
     """
     Compute the payoff of the player if the group extraction stay at its
@@ -96,12 +104,12 @@ def get_infinite_payoff(p, E_p, R_p):
                     pow(1-param_r*param_tau, p+1) / (param_r * param_tau)
             )
             +
-        param_tau * E_p * param_c1 * cste_dis
+            param_tau * E_p * param_c1 * cste_dis
             *
             (
                     (
-                            pow(1 - param_r*param_tau, p+1) *
-                            (p * param_r*param_tau + 1)
+                            pow(1 - param_r * param_tau, p+1) *
+                            (p * param_r * param_tau + 1)
                     )
                     /
                     pow(param_r * param_tau, 2)
@@ -112,11 +120,11 @@ def get_infinite_payoff(p, E_p, R_p):
         cste_p = RESOURCE_GROWTH - E_p
         return np.asscalar(
             (
-                    np.exp(-param_r*p) / param_r
+                    np.exp(-param_r * p) / param_r
             )
             *
             (
-                    param_a*E_p - (param_b/2) * E_p**2 -
+                    param_a * E_p - (param_b/2) * E_p**2 -
                     E_p*(param_c0 - param_c1 * R_p + param_c1 * cste_p * p)
             )
             +
