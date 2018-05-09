@@ -81,7 +81,8 @@ def get_cumulative_payoff(p, extractions):
                     for i in range(p)])
 
     elif DYNAMIC_TYPE == CONTINUOUS:
-        return sum([np.exp(- param_r * i) * extractions[i] for i in range(p)])
+        return np.asscalar(
+            sum([np.exp(- param_r * i) * extractions[i] for i in range(p)]))
 
 
 def get_infinite_payoff(p, E_p, R_p):
