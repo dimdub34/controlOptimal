@@ -220,6 +220,8 @@ class RemoteCO(IRemote, QObject):
             u": {:.2f}".format(self.resource.ydata[-1]) + \
             u"<br>" + texts_CO.trans_CO(u"Instant payoff") + \
             u": {:.2f}".format(self.payoff_instant.ydata[-1]) + \
+            u"<br>" + texts_CO.trans_CO(u"Cumulative payoff") + \
+            u": {:.2f}".format(cumulative_payoff) + \
             u"<br>" + texts_CO.trans_CO(u"Part payoff") + \
             u": {:.2f}".format(self.payoff_part.ydata[-1])
         self.text_infos += u"<br>{}<br>{}".format(20*"-", old)

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-05-02 16:07+0200\n"
-"PO-Revision-Date: 2018-05-02 16:08+0200\n"
+"PO-Revision-Date: 2018-05-09 16:03+0200\n"
 "Last-Translator: Dimitri DUBOIS <dimitri.dubois@umontpellier.fr>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -87,7 +87,7 @@ msgstr "Label de décision"
 
 #: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalTexts.py:55
 msgid "Your payoff for the part is "
-msgstr "Votre gain pour la partie est de"
+msgstr "Votre gain pour la partie est de "
 
 #~ msgid "Please choose an initial extraction value"
 #~ msgstr "Merci de choisir une extraction initiale"

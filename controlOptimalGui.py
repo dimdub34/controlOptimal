@@ -217,8 +217,8 @@ class PlotPayoff(QWidget):
                 self.payoffs.xdata, self.payoffs.ydata,
                 "-k", marker=curve_marker)
 
-        self.graph.set_ylim(0, 600)
-        self.graph.set_yticks(range(0, 601, 50))
+        self.graph.set_ylim(0, 20)
+        self.graph.set_yticks(range(0, 21, 2))
         self.graph.set_ylabel("")
         self.graph.set_title(trans_CO(u"Part payoff"))
         self.graph.grid()

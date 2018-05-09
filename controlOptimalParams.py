@@ -12,6 +12,7 @@ which means that you should ask to the developer ;-)
 from datetime import timedelta
 import numpy as np
 
+
 # ------------------------------------------------------------------------------
 # VARIABLES - do not change any value below
 # ------------------------------------------------------------------------------
@@ -76,10 +77,11 @@ param_tau = 0.1
 
 def get_cumulative_payoff(p, extractions):
     if DYNAMIC_TYPE == DISCRETE:
-        return sum([pow(1 - param_r * param_tau, p) * i for i in extractions])
+        return sum([pow(1 - param_r * param_tau, i) * extractions[i]
+                    for i in range(p)])
 
     elif DYNAMIC_TYPE == CONTINUOUS:
-        return sum([i * np.exp(- param_r * p) for i in extractions])
+        return sum([np.exp(- param_r * i) * extractions[i] for i in range(p)])
 
 
 def get_infinite_payoff(p, E_p, R_p):
