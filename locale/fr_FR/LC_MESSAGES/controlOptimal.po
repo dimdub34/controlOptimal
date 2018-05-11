@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-02 16:07+0200\n"
-"PO-Revision-Date: 2018-05-09 16:03+0200\n"
+"POT-Creation-Date: 2018-05-11 11:34+0200\n"
+"PO-Revision-Date: 2018-05-11 11:34+0200\n"
 "Last-Translator: Dimitri DUBOIS <dimitri.dubois@umontpellier.fr>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -17,55 +17,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.7.1\n"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalServ.py:93
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalServ.py:96
 msgid "Initial extraction"
 msgstr "Extraction initiale"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalServ.py:122
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:370
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalServ.py:125
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:368
 msgid "Decision"
 msgstr "Décision"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:212
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:213
 msgid "Instant"
 msgstr "Instant"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:214
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:215
 msgid "Period"
 msgstr "Périodes"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:216
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:132
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:217
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:130
 msgid "Extraction"
 msgstr "Extraction"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:218
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:181
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:219
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:179
 msgid "Available resource"
 msgstr "Ressource disponible"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:220
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:221
 msgid "Instant payoff"
 msgstr "Gain de l'instant"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:222
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:225
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:223
+msgid "Cumulative payoff"
+msgstr "Gain cumulé"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:225
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:223
 msgid "Part payoff"
 msgstr "Gain de la partie"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:110
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:160
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:204
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:108
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:158
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:202
 msgid "Periods"
 msgstr "Périodes"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:120
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:170
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:214
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:118
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:168
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:212
 msgid "Time (seconds)"
 msgstr "Temps (secondes)"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:278
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:276
 msgid "Do you confirm your choice?"
 msgstr "Vous confirmez votre choix?"
 
