@@ -498,7 +498,7 @@ class GuiSummary(QDialog):
         # ----------------------------------------------------------------------
         data_indiv = {
             "extractions": zip(self.remote.extractions.xdata, self.remote.extractions.ydata),
-            "payoffs": zip(self.remote.payoff_part.xdata, self.remote.payoff_part.ydata),
+            "payoffs": zip(self.remote.payoff_part.xdata, np.array(self.remote.payoff_part.ydata).tolist()),
             "cost": zip(self.remote.cost.xdata, self.remote.cost.ydata),
             "resource": zip(self.remote.resource.xdata, self.remote.resource.ydata)
         }

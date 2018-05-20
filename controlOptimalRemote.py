@@ -32,6 +32,7 @@ class RemoteCO(IRemote, QObject):
         self.extractions = PlotData()
         self.cost = PlotData()
         self.payoff_instant = PlotData()
+        self.payoff_instant_discounted = PlotData()
         self.payoff_part = PlotData()
         self.resource = PlotData()
         self.text_infos = u""
@@ -188,11 +189,16 @@ class RemoteCO(IRemote, QObject):
         # ----------------------------------------------------------------------
         self.payoff_instant.add_x(xdata)
         self.payoff_instant.add_y(player_extraction["CO_payoff"])
-        cumulative_payoff = pms.get_cumulative_payoff(
-            xdata, self.payoff_instant.ydata)
+        self.payoff_instant_discounted.add_x(xdata)
+        if pms.DYNAMIC_TYPE == pms.CONTINUOUS:
+            self.payoff_instant_discounted.add_y(
+                np.exp(- pms.param_r * xdata) * self.payoff_instant.ydata[-1])
+        else:  # discrete
+            pass  # todo: discounted payoff for discrete dynamic
+        cumulative_payoff = np.sum(self.payoff_instant_discounted.ydata)
         infinite_payoff = pms.get_infinite_payoff(
-            xdata, player_extraction["CO_extraction"],
-            player_extraction["CO_resource"])
+            xdata, player_extraction["CO_resource"],
+            player_extraction["CO_extraction"])
         self.payoff_part.add_x(xdata)
         self.payoff_part.add_y(cumulative_payoff + infinite_payoff)
 
@@ -220,6 +226,8 @@ class RemoteCO(IRemote, QObject):
             u": {:.2f}".format(self.resource.ydata[-1]) + \
             u"<br>" + texts_CO.trans_CO(u"Instant payoff") + \
             u": {:.2f}".format(self.payoff_instant.ydata[-1]) + \
+            u"<br>" + texts_CO.trans_CO(u"Discounted payoff") + \
+            u": {:.2f}".format(self.payoff_instant_discounted.ydata[-1]) + \
             u"<br>" + texts_CO.trans_CO(u"Cumulative payoff") + \
             u": {:.2f}".format(cumulative_payoff) + \
             u"<br>" + texts_CO.trans_CO(u"Part payoff") + \
