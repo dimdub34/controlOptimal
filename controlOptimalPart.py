@@ -130,10 +130,6 @@ class PartieCO(Partie, pb.Referenceable):
         except TypeError:
             the_time = 0
 
-        # ----------------------------------------------------------------------
-        # compute the resource
-        # ----------------------------------------------------------------------
-        self.current_resource += pms.RESOURCE_GROWTH
         # if the extraction > current_resource we create a new extraction of 0
         if self.current_extraction.CO_extraction > self.current_resource:
             # create a new extraction
@@ -141,22 +137,26 @@ class PartieCO(Partie, pb.Referenceable):
             self.joueur.info(self.current_extraction)
             self.le2mserv.gestionnaire_base.ajouter(self.current_extraction)
             self.currentperiod.extractions.append(self.current_extraction)
-        self.current_resource -= self.current_extraction.CO_extraction
-        self.current_extraction.CO_resource = self.current_resource
 
-        # ----------------------------------------------------------------------
-        # compute individual payoffs
-        # ----------------------------------------------------------------------
         j_extrac = self.current_extraction.CO_extraction
+
+        # benefice
         self.current_extraction.CO_benefice = \
             pms.param_a * j_extrac - (pms.param_b / 2) * pow(j_extrac, 2)
-        self.current_extraction.CO_cost = \
-            j_extrac * (pms.param_c0 - pms.param_c1 * self.current_resource)
-        # we do not allow a negative cost
-        if self.current_extraction.CO_cost < 0:
-            self.current_extraction.CO_cost = 0
+
+        # cost
+        cost = j_extrac * (pms.param_c0 - pms.param_c1 * self.current_resource)
+        if cost < 0:
+            cost = 0
+        self.current_extraction.CO_cost = cost
+
+        # payoff
         self.current_extraction.CO_payoff = \
             self.current_extraction.CO_benefice - self.current_extraction.CO_cost
+
+        self.current_resource -= self.current_extraction.CO_extraction
+        self.current_resource += pms.RESOURCE_GROWTH
+        self.current_extraction.CO_resource = self.current_resource
 
         # ----------------------------------------------------------------------
         # update the remote
