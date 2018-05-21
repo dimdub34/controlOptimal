@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-11 11:34+0200\n"
-"PO-Revision-Date: 2018-05-11 11:34+0200\n"
+"POT-Creation-Date: 2018-05-21 17:01+0200\n"
+"PO-Revision-Date: 2018-05-21 17:03+0200\n"
 "Last-Translator: Dimitri DUBOIS <dimitri.dubois@umontpellier.fr>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -26,33 +26,37 @@ msgstr "Extraction initiale"
 msgid "Decision"
 msgstr "Décision"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:213
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:219
 msgid "Instant"
 msgstr "Instant"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:215
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:221
 msgid "Period"
 msgstr "Périodes"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:217
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:223
 #: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:130
 msgid "Extraction"
 msgstr "Extraction"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:219
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:225
 #: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:179
 msgid "Available resource"
 msgstr "Ressource disponible"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:221
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:227
 msgid "Instant payoff"
 msgstr "Gain de l'instant"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:223
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:229
+msgid "Discounted payoff"
+msgstr "Gain de l'instant actualisé"
+
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:231
 msgid "Cumulative payoff"
 msgstr "Gain cumulé"
 
-#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:225
+#: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalRemote.py:233
 #: /home/dimitri/Documents/travail/programmes/le2m-v2.1/le2m/parts/controlOptimal/controlOptimalGui.py:223
 msgid "Part payoff"
 msgstr "Gain de la partie"
