@@ -130,7 +130,10 @@ class PartieCO(Partie, pb.Referenceable):
         except TypeError:
             the_time = 0
 
-        # if the extraction > current_resource we create a new extraction of 0
+        # ----------------------------------------------------------------------
+        # check extraction
+        # ----------------------------------------------------------------------
+        # if extraction > current_resource => new extraction of 0
         if self.current_extraction.CO_extraction > self.current_resource:
             # create a new extraction
             self.current_extraction = ExtractionsCO(0, the_time)
@@ -140,6 +143,9 @@ class PartieCO(Partie, pb.Referenceable):
 
         j_extrac = self.current_extraction.CO_extraction
 
+        # ----------------------------------------------------------------------
+        # compute payoff
+        # ----------------------------------------------------------------------
         # benefice
         self.current_extraction.CO_benefice = \
             pms.param_a * j_extrac - (pms.param_b / 2) * pow(j_extrac, 2)
@@ -154,6 +160,9 @@ class PartieCO(Partie, pb.Referenceable):
         self.current_extraction.CO_payoff = \
             self.current_extraction.CO_benefice - self.current_extraction.CO_cost
 
+        # ----------------------------------------------------------------------
+        # compute the new available resource
+        # ----------------------------------------------------------------------
         self.current_resource -= self.current_extraction.CO_extraction
         self.current_resource += pms.RESOURCE_GROWTH
         self.current_extraction.CO_resource = self.current_resource
