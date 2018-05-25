@@ -270,9 +270,9 @@ class RemoteCO(IRemote, QObject):
             }
         else:
             defered = defer.Deferred()
-            part_payoff = float(self.payoff_part.ydata[-1]) * pms.TAUX_CONVERSION
             summary_screen = GuiSummary(
-                self, defered, texts_CO.get_text_summary(part_payoff))
+                self, defered, texts_CO.get_text_summary(
+                    float(self.payoff_part.ydata[-1])))
             summary_screen.showFullScreen()
             return defered
 

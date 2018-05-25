@@ -52,8 +52,10 @@ def get_text_label_decision():
 
 
 def get_text_summary(part_payoff):
-    txt = trans_CO(u"Your payoff for the part is ") + \
-          u"{:.2f} euros".format(part_payoff)
+    txt = trans_CO(u"Your payoff for this part is ") + \
+          u" {:.2f} ecus, ".format(part_payoff) + \
+          trans_CO(u"which corresponds to ") + \
+          u"{:.2f} euros".format(part_payoff * pms.TAUX_CONVERSION)
     return txt
 
 
