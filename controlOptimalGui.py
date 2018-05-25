@@ -174,7 +174,7 @@ class PlotResource(QWidget):
                 "-k", marker=curve_marker)
 
         self.graph.set_ylim(0, pms.RESOURCE_INITIAL_STOCK * 3)
-        self.graph.set_yticks(range(0, pms.RESOURCE_INITIAL_STOCK * 3 + 1, 2))
+        self.graph.set_yticks(range(0, pms.RESOURCE_INITIAL_STOCK * 3 + 1, 5))
         self.graph.set_ylabel("")
         self.graph.set_title(trans_CO(u"Available resource"))
         self.graph.grid()
@@ -217,8 +217,8 @@ class PlotPayoff(QWidget):
                 self.payoffs.xdata, self.payoffs.ydata,
                 "-k", marker=curve_marker)
 
-        self.graph.set_ylim(0, 16)
-        self.graph.set_yticks(range(0, 17, 2))
+        self.graph.set_ylim(0, 250)
+        self.graph.set_yticks(range(0, 271, 20))
         self.graph.set_ylabel("")
         self.graph.set_title(trans_CO(u"Part payoff"))
         self.graph.grid()

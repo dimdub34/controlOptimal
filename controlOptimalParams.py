@@ -60,7 +60,7 @@ TIMER_UPDATE = timedelta(seconds=1)  # refresh the group data and the graphs
 # RESOURCE
 # ------------------------------------------------------------------------------
 
-RESOURCE_INITIAL_STOCK = 10
+RESOURCE_INITIAL_STOCK = 20
 RESOURCE_GROWTH = 0.56
 
 # ------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ param_a = 2.5
 param_b = 1.8
 param_c0 = 2
 param_c1 = 0.1
-param_r = 0.05
+param_r = 0.005
 param_tau = 0.1
 
 
