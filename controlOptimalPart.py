@@ -47,10 +47,10 @@ class PartieCO(Partie, pb.Referenceable):
         self.CO_gain_euros = 0
 
         self.time_start = None
-        self.timer_update = QTimer()
-        self.timer_update.setInterval(
-            int(pms.TIMER_UPDATE.total_seconds())*1000)
-        self.timer_update.timeout.connect(self.update_data)
+        # self.timer_update = QTimer()
+        # self.timer_update.setInterval(
+        #     int(pms.TIMER_UPDATE.total_seconds())*1000)
+        # self.timer_update.timeout.connect(self.update_data)
 
     @defer.inlineCallbacks
     def configure(self):

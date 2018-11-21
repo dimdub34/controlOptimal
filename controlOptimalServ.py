@@ -115,12 +115,18 @@ class Serveur(object):
             QTimer.singleShot(
                 pms.CONTINUOUS_TIME_DURATION.total_seconds()*1000 + 1000,
                 self.slot_time_elapsed)
+
             time_start = datetime.now()
             self.le2mserv.gestionnaire_graphique.infoserv(
                 "Start time: {}".format(time_start.strftime("%H:%M:%S")))
             for j in self.all:
                 j.time_start = time_start
-                j.timer_update.start()
+                # j.timer_update.start()
+
+            self.timer_update = QTimer()
+            self.timer_update.timeout.connect(self.slot_update_data)
+            self.timer_update.start(int(pms.TIMER_UPDATE.total_seconds()) * 1000)
+
             yield(self.le2mserv.gestionnaire_experience.run_step(
                 trans_CO("Decision"), self.all, "display_decision",
                 time_start))
@@ -169,10 +175,16 @@ class Serveur(object):
     def slot_time_elapsed(self):
         self.le2mserv.gestionnaire_graphique.infoserv("End time: {}".format(
             datetime.now().strftime("%H:%M:%S")))
-        for j in self.all:
-            j.timer_update.stop()
+        # for j in self.all:
+        #     j.timer_update.stop()
+        self.timer_update.stop()
         yield (self.le2mserv.gestionnaire_experience.run_func(
             self.all, "end_update_data"))
+
+    @pyqtSlot()
+    def slot_update_data(self):
+        for j in self.all:
+            j.update_data()
 
     def display_payoffs(self):
         sequence_screen = DSequence(self.current_sequence)
