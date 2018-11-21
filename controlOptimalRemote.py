@@ -101,10 +101,10 @@ class RemoteCO(IRemote, QObject):
                     extraction = float(np.random.choice(
                         np.arange(pms.DECISION_MIN, pms.DECISION_MAX,
                                   pms.DECISION_STEP)))
-                    logger.info(u"{} Send {}".format(self._le2mclt.uid,
-                                                     extraction))
-                    self.server_part.callRemote("new_extraction",
-                                                extraction)
+                    logger.info(
+                        u"{} Send {}".format(self._le2mclt.uid, extraction)
+                    )
+                    self.server_part.callRemote("new_extraction", extraction)
 
                 self.continuous_simulation_defered = defer.Deferred()
                 self.continuous_simulation_timer = QTimer()
@@ -200,7 +200,9 @@ class RemoteCO(IRemote, QObject):
             xdata, player_extraction["CO_resource"],
             player_extraction["CO_extraction"])
         self.payoff_part.add_x(xdata)
-        self.payoff_part.add_y(cumulative_payoff + infinite_payoff)
+        # on passe en float car cette valeur est ensuite envoyée au serveur via
+        # le reseau (donc numpy.float64 ne passe pas)
+        self.payoff_part.add_y(float(cumulative_payoff + infinite_payoff))
 
         # ----------------------------------------------------------------------
         # update curves
