@@ -16,7 +16,7 @@ from controlOptimalGui import GuiDecision, GuiInitialExtraction, GuiSummary
 import controlOptimalTexts as texts_CO
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("le2m." + __name__)
 
 
 class RemoteCO(IRemote, QObject):
@@ -239,7 +239,7 @@ class RemoteCO(IRemote, QObject):
         # ----------------------------------------------------------------------
         # log
         # ----------------------------------------------------------------------
-        logger.info("{} update data extraction: {:.2f} "
+        logger.debug("{} update data extraction: {:.2f} "
                     "resource: {:.2f} payoff: {:.2f}".format(
             self.le2mclt, self.extractions.ydata[-1],
             self.resource.ydata[-1],
@@ -266,10 +266,11 @@ class RemoteCO(IRemote, QObject):
             curves = {
                 "extractions": self.extractions.get_curve(),
                 "payoffs": self.payoff_part.get_curve(),
-                "costs": self.cost.get_curve(),
+                "cost": self.cost.get_curve(),
                 "resource": self.resource.get_curve()
             }
-            logger.info("{} send curves ({})".format(self.le2mclt, curves))
+            logger.info("{} send curves ({})".format(
+                self.le2mclt, curves.keys()))
             return curves
         else:
             defered = defer.Deferred()
@@ -295,7 +296,7 @@ class PlotData():
         self.xdata.append(int(val))
 
     def add_y(self, val):
-        self.ydata.append(float(val), 5)
+        self.ydata.append(float(val))
 
     def update_curve(self):
         self.curve.set_data(self.xdata, self.ydata)
