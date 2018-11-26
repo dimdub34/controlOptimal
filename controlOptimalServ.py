@@ -5,8 +5,7 @@ import logging
 from collections import OrderedDict
 from twisted.internet import defer
 from datetime import datetime
-from PyQt4.QtCore import QTimer, QObject, pyqtSlot
-from PyQt4.QtGui import QMessageBox
+from PyQt4.QtCore import QTimer, pyqtSlot
 
 # le2m
 from util import utiltools
@@ -20,7 +19,7 @@ from controlOptimalTexts import trans_CO
 from controlOptimalGui import DConfigure
 
 
-logger = logging.getLogger("le2m.{}".format(__name__))
+logger = logging.getLogger("le2m." + __name__)
 
 
 class Serveur(object):
@@ -94,8 +93,8 @@ class Serveur(object):
         self.le2mserv.gestionnaire_experience.run_func(self.all, "newperiod", 0)
         yield (self.le2mserv.gestionnaire_experience.run_step(
             trans_CO(u"Initial extraction"), self.all, "set_initial_extraction"))
-        self.le2mserv.gestionnaire_experience.run_func(
-            self.all, "update_data")
+        yield (self.le2mserv.gestionnaire_experience.run_func(
+            self.all, "update_data"))
 
         # ----------------------------------------------------------------------
         # DEPENDS ON TREATMENT
@@ -168,7 +167,7 @@ class Serveur(object):
         # End of part
         # ----------------------------------------------------------------------
 
-        yield (self.le2mserv.gestionnaire_experience.finalize_part("controlOptimal"))
+        yield(self.le2mserv.gestionnaire_experience.finalize_part("controlOptimal"))
 
     @defer.inlineCallbacks
     @pyqtSlot()
@@ -181,10 +180,11 @@ class Serveur(object):
         yield (self.le2mserv.gestionnaire_experience.run_func(
             self.all, "end_update_data"))
 
+    @defer.inlineCallbacks
     @pyqtSlot()
     def slot_update_data(self):
-        for j in self.all:
-            j.update_data()
+        yield (self.le2mserv.gestionnaire_experience.run_func(
+            self.all, "update_data"))
 
     def display_payoffs(self):
         sequence_screen = DSequence(self.current_sequence)
