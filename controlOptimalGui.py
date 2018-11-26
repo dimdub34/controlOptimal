@@ -497,12 +497,12 @@ class GuiSummary(QDialog):
         # we send back the different individual curves
         # ----------------------------------------------------------------------
         data_indiv = {
-            "extractions": zip(self.remote.extractions.xdata, self.remote.extractions.ydata),
-            "payoffs": zip(self.remote.payoff_part.xdata, np.array(self.remote.payoff_part.ydata).tolist()),
-            "cost": zip(self.remote.cost.xdata, self.remote.cost.ydata),
-            "resource": zip(self.remote.resource.xdata, self.remote.resource.ydata)
+            "extractions": self.remote.extractions.get_curve(),
+            "payoffs": self.remote.payoff_part.get_curve(),
+            "cost": self.remote.cost.get_curve(),
+            "resource": self.remote.resource.get_curve()
         }
-        logger.debug("{} send curves".format(self.remote.le2mclt))
+        logger.debug("{} send curves ({})".format(self.remote.le2mclt, data_indiv.keys()))
         self.defered.callback(data_indiv)
         self.accept()
 
