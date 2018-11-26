@@ -18,7 +18,7 @@ from util.utiltools import get_module_attributes
 import controlOptimalParams as pms
 
 
-logger = logging.getLogger("le2m")
+logger = logging.getLogger("le2m." + __name__)
 
 
 class PartieCO(Partie, pb.Referenceable):
@@ -194,31 +194,45 @@ class PartieCO(Partie, pb.Referenceable):
         data_indiv = yield(self.remote.callRemote(
             "display_summary", self.currentperiod.to_dict()))
 
-        extrac_indiv = data_indiv["extractions"]
-        for x, y in extrac_indiv:
-            curve_data = CurveCO(pms.EXTRACTION, x, y)
-            self.le2mserv.gestionnaire_base.ajouter(curve_data)
-            self.curves.append(curve_data)
+        logger.debug("{}: {}".format(self.joueur, data_indiv.keys()))
 
-        payoff_indiv = data_indiv["payoffs"]
-        for x, y in payoff_indiv:
-            curve_data = CurveCO(pms.PAYOFF, x, y)
-            self.le2mserv.gestionnaire_base.ajouter(curve_data)
-            self.curves.append(curve_data)
-        # we collect the part payoff
-        self.CO_gain_ecus = payoff_indiv[-1][1]
+        try:
+            extrac_indiv = data_indiv["extractions"]
+            for x, y in extrac_indiv:
+                curve_data = CurveCO(pms.EXTRACTION, x, y)
+                self.le2mserv.gestionnaire_base.ajouter(curve_data)
+                self.curves.append(curve_data)
+        except Exception as err:
+            logger.warning(err.message)
 
-        resource = data_indiv["resource"]
-        for x, y in resource:
-            curve_data = CurveCO(pms.RESOURCE, x, y)
-            self.le2mserv.gestionnaire_base.ajouter(curve_data)
-            self.curves.append(curve_data)
+        try:
+            payoff_indiv = data_indiv["payoffs"]
+            for x, y in payoff_indiv:
+                curve_data = CurveCO(pms.PAYOFF, x, y)
+                self.le2mserv.gestionnaire_base.ajouter(curve_data)
+                self.curves.append(curve_data)
+            # we collect the part payoff
+            self.CO_gain_ecus = payoff_indiv[-1][1]
+        except Exception as err:
+            logger.warning(err.message)
 
-        cost = data_indiv["cost"]
-        for x, y in cost:
-            curve_data = CurveCO(pms.COST, x, y)
-            self.le2mserv.gestionnaire_base.ajouter(curve_data)
-            self.curves.append(curve_data)
+        try:
+            resource = data_indiv["resource"]
+            for x, y in resource:
+                curve_data = CurveCO(pms.RESOURCE, x, y)
+                self.le2mserv.gestionnaire_base.ajouter(curve_data)
+                self.curves.append(curve_data)
+        except Exception as err:
+            logger.warning(err.message)
+
+        try:
+            cost = data_indiv["cost"]
+            for x, y in cost:
+                curve_data = CurveCO(pms.COST, x, y)
+                self.le2mserv.gestionnaire_base.ajouter(curve_data)
+                self.curves.append(curve_data)
+        except Exception as err:
+            logger.warning(err.message)
 
         self.joueur.info("Ok")
         self.joueur.remove_waitmode()
@@ -233,8 +247,8 @@ class PartieCO(Partie, pb.Referenceable):
         """
         logger.debug(u"{} Part Payoff".format(self.joueur))
 
-        self.CO_gain_euros = float("{:.2f}".format(float(self.CO_gain_ecus) *
-                                                   float(pms.TAUX_CONVERSION)))
+        self.CO_gain_euros = float("{:.2f}".format(
+            self.CO_gain_ecus * pms.TAUX_CONVERSION))
 
         yield (self.remote.callRemote(
             "set_payoffs", self.CO_gain_euros, self.CO_gain_ecus))
