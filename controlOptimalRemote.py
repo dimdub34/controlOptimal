@@ -16,7 +16,7 @@ from controlOptimalGui import GuiDecision, GuiInitialExtraction, GuiSummary
 import controlOptimalTexts as texts_CO
 
 
-logger = logging.getLogger("le2m")
+logger = logging.getLogger(__name__)
 
 
 class RemoteCO(IRemote, QObject):
@@ -202,7 +202,7 @@ class RemoteCO(IRemote, QObject):
         self.payoff_part.add_x(xdata)
         # on passe en float car cette valeur est ensuite envoyée au serveur via
         # le reseau (donc numpy.float64 ne passe pas)
-        self.payoff_part.add_y(float(cumulative_payoff + infinite_payoff))
+        self.payoff_part.add_y(cumulative_payoff + infinite_payoff)
 
         # ----------------------------------------------------------------------
         # update curves
@@ -263,13 +263,14 @@ class RemoteCO(IRemote, QObject):
         """
         logger.info(u"{} Summary".format(self._le2mclt.uid))
         if self._le2mclt.simulation:
-            logger.info("{} send curves".format(self.le2mclt))
-            return {
-                "extractions": zip(self.extractions.xdata, self.extractions.ydata),
-                "payoffs": zip(self.payoff_part.xdata, self.payoff_part.ydata),
-                "costs": zip(self.cost.xdata, self.cost.ydata),
-                "resource": zip(self.resource.xdata, self.resource.ydata)
+            curves = {
+                "extractions": self.extractions.get_curve(),
+                "payoffs": self.payoff_part.get_curve(),
+                "costs": self.cost.get_curve(),
+                "resource": self.resource.get_curve()
             }
+            logger.info("{} send curves ({})".format(self.le2mclt, curves))
+            return curves
         else:
             defered = defer.Deferred()
             summary_screen = GuiSummary(
@@ -291,12 +292,13 @@ class PlotData():
         self.curve = None
 
     def add_x(self, val):
-        self.xdata.append(val)
+        self.xdata.append(int(val))
 
     def add_y(self, val):
-        self.ydata.append(val)
+        self.ydata.append(float(val), 5)
 
     def update_curve(self):
         self.curve.set_data(self.xdata, self.ydata)
 
-
+    def get_curve(self):
+        return zip(self.xdata, self.ydata)
