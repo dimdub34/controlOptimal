@@ -50,7 +50,7 @@ PARTIE_ESSAI = False
 
 DYNAMIC_TYPE = CONTINUOUS
 # continuous game
-CONTINUOUS_TIME_DURATION = timedelta(seconds=60)  # can be changed in config screen
+CONTINUOUS_TIME_DURATION = timedelta(seconds=30)  # can be changed in config screen
 # time for the player to take a decision
 DISCRETE_DECISION_TIME = timedelta(seconds=10)
 # milliseconds
